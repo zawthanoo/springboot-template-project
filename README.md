@@ -1,4 +1,4 @@
-Project template for spring rest api.
+Project template for spring REST API
 ---
 * spring-boot
 * mybatic
