@@ -4,7 +4,7 @@ Project template for spring REST API
 * mybatic
 * mysql
 * ExceptionHandlerAspect
-* LoggingAspect
+* LoggingAspect with log4j2
 * ResponseBodyAdvice
 * ResponseEntityExceptionHandler
 * spring-security with oauth2
