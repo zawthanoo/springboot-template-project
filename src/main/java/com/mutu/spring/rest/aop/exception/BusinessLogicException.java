@@ -2,6 +2,11 @@ package com.mutu.spring.rest.aop.exception;
 
 import org.springframework.transaction.TransactionSystemException;
 
+/**
+ * @author Zaw Than Oo
+ * @since 01-DEC-2018 <br/>
+ *        This classed is used to throw exception for business logic.
+ */
 public class BusinessLogicException extends TransactionSystemException {
 	private static final long serialVersionUID = -4636343176401289427L;
 	private String errorCode;

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mutu.spring.rest.custommapper.EmployeeCustomMapper">
+	<resultMap id="EmployeeDetails" type="com.mutu.spring.rest.dto.EmployeeDto">
+		<result property="fullName" column="NAME" />
+		<result property="phone" column="MOBILE" />
+		<result property="email" column="EMAIL" />
+	</resultMap>
+	
+	<select id="findByEmail" parameterType="string" resultMap="EmployeeDetails">
+		SELECT 
+			T1.NAME, 
+			T1.MOBILE, 
+			T1.EMAIL
+		FROM EMPLOYEE T1
+		WHERE T1.EMAIL = #{email} 
+	</select>
+</mapper>
