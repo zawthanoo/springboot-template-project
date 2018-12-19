@@ -1,6 +1,6 @@
 /.setting/
 /target/
-/log
+/logs
 /.mvn
 .classpath
 .project
