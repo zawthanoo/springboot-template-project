@@ -9,4 +9,4 @@ Project template for spring REST API
 * ResponseEntityExceptionHandler
 * spring-security with oauth2
 
-  PostMan Inport URL - https://www.getpostman.com/collections/2f22d4bd2b4594b0f8a6
+  Postman Inport URL - https://www.getpostman.com/collections/2f22d4bd2b4594b0f8a6
