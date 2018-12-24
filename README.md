@@ -2,6 +2,7 @@ Project template for spring REST API
 ---
 * spring-boot
 * mybatic
+* mybatic generator
 * mysql
 * ExceptionHandlerAspect
 * LoggingAspect with log4j2
