@@ -22,7 +22,9 @@
     </Appenders>
  
     <Loggers>
-        <Root level="off">
+        <Root level="debug">
+        	<AppenderRef ref="Console"/>
+        	<AppenderRef ref="RollingFile" />
         </Root>
         <Logger name="com.mutu.spring.rest" level="debug" additivity="false">
         	<AppenderRef ref="Console"/>
