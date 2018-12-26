@@ -3,6 +3,7 @@ package com.mutu.spring.rest.aop;
 import java.time.LocalDateTime;
 
 import org.springframework.core.MethodParameter;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.server.ServerHttpRequest;
@@ -10,10 +11,10 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+import com.mutu.spring.rest.aop.dto.ApiStatus;
+import com.mutu.spring.rest.aop.dto.Result;
 import com.mutu.spring.rest.aop.exception.ApiError;
 import com.mutu.spring.rest.aop.exception.MessageCode;
-import com.mutu.spring.rest.dto.ApiStatus;
-import com.mutu.spring.rest.dto.Result;
 
 /**
  * @author Zaw Than Oo
@@ -37,7 +38,13 @@ public class ResponseEntityHandler implements ResponseBodyAdvice<Object> {
 	public Object beforeBodyWrite(final Object body, final MethodParameter returnType,
 			final MediaType selectedContentType, final Class<? extends HttpMessageConverter<?>> selectedConverterType,
 			final ServerHttpRequest request, final ServerHttpResponse response) {
-
+		response.setStatusCode(HttpStatus.OK);
+		if(returnType.getParameterType().isAssignableFrom(void.class)) {
+            Result result = new Result();
+    		result.setData(body);
+    		result.setStatus(ApiStatus.SUCCESS);
+    		return result;
+        }
 		if (body instanceof ApiError) {
 			return body;
 		}
@@ -45,7 +52,6 @@ public class ResponseEntityHandler implements ResponseBodyAdvice<Object> {
 		if (body instanceof String) {
 			return body;
 		}
-
 		if (body instanceof RuntimeException) {
 			RuntimeException re = (RuntimeException) body;
 			ApiError apiError = new ApiError(ApiStatus.FAILED);

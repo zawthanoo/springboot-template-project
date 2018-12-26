@@ -5,6 +5,8 @@ spring:
     url: jdbc:mysql://localhost:3306/spring-rest?useUnicode=true&characterEncoding=utf8
     username: root
     password: root
+  jackson:
+    date-format: yyyy-MM-dd 
 server:
   servlet:
-    contextPath: /api
+    contextPath: /api    

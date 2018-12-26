@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mutu.spring.rest.custommapper.EmployeeCustomMapper;
+import com.mutu.spring.rest.dto.CreateEmployeeDtoReq;
 import com.mutu.spring.rest.dto.EmployeeDto;
 import com.mutu.spring.rest.zgen.entity.Employee;
 import com.mutu.spring.rest.zgen.entity.EmployeeExample;
@@ -34,5 +35,15 @@ public class EmployeeDao {
 
 	public EmployeeDto findByEmail(String email) {
 		return employeeCustomMapper.findByEmail(email);
+	}
+	
+	public void create(CreateEmployeeDtoReq dtoReq) {
+		Employee employee = new Employee();
+		employee.setName(dtoReq.getFullName());
+		employee.setDob(dtoReq.getDob());
+		employee.setEmail(dtoReq.getEmail());
+		employee.setMobile(dtoReq.getPhone());
+		employee.setGender(dtoReq.getGender().toString());
+		employeeMapper.insert(employee);
 	}
 }

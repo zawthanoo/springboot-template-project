@@ -3,13 +3,16 @@ package com.mutu.spring.rest.oauth2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
+import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
@@ -41,7 +44,7 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	static final String SCOPE_TRUST = "trust";
 	static final String SCOPE_ADMIN = "ADMIN";
 	static final String SCOPE_USER = "USER";
-	static final int ACCESS_TOKEN_VALIDITY_SECONDS = 1 * 60 * 60;
+	static final int ACCESS_TOKEN_VALIDITY_SECONDS = 2 * 60 * 60;
 	static final int FREFRESH_TOKEN_VALIDITY_SECONDS = 2 * 60 * 60;
 
 	@Autowired
@@ -82,5 +85,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager)
 				.accessTokenConverter(accessTokenConverter());
+		endpoints.exceptionTranslator(new WebResponseExceptionTranslator<OAuth2Exception>() {
+			
+			@Override
+			public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
+				e.printStackTrace();
+				return null;
+			}
+		});
 	}
 }

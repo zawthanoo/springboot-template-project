@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mutu.spring.rest.dao.EmployeeDao;
+import com.mutu.spring.rest.dto.CreateEmployeeDtoReq;
 import com.mutu.spring.rest.dto.EmployeeDto;
 import com.mutu.spring.rest.zgen.entity.Employee;
 
@@ -20,13 +21,17 @@ import com.mutu.spring.rest.zgen.entity.Employee;
 @Transactional(propagation = Propagation.REQUIRED)
 public class EmployeeService {
 	@Autowired
-	private EmployeeDao dmployeeDao;
+	private EmployeeDao employeeDao;
 
 	public List<Employee> getEmployeeList() {
-		return dmployeeDao.getEmployeeList();
+		return employeeDao.getEmployeeList();
 	}
 
 	public EmployeeDto findByEmail(String email) {
-		return dmployeeDao.findByEmail(email);
+		return employeeDao.findByEmail(email);
+	}
+	
+	public void create(CreateEmployeeDtoReq dtoReq) {
+		employeeDao.create(dtoReq);
 	}
 }

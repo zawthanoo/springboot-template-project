@@ -9,6 +9,7 @@ package com.mutu.spring.rest.aop.exception;
 public class MessageCode {
 	/* Common */
 	public static final String UNEXPECTED_ERROR = "UNEXPECTED_ERROR";
+	public static final String INVALID_REQUEST_PARAMETER = "INVALID_REQUEST_PARAMETER";
 	public static final String DB_PROCESS_ERROR = "DB_PROCESS_ERROR";
 	public static final String INVALID_TOKEN = "INVALID_TOKEN";
 	public static final String USR_PWD_INCORRECT = "USR_PWD_INCORRECT";

@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.dto;
+package com.mutu.spring.rest.aop.dto;
 
 import lombok.Data;
 
