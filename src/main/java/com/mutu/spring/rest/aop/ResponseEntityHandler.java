@@ -39,19 +39,6 @@ public class ResponseEntityHandler implements ResponseBodyAdvice<Object> {
 			final MediaType selectedContentType, final Class<? extends HttpMessageConverter<?>> selectedConverterType,
 			final ServerHttpRequest request, final ServerHttpResponse response) {
 		response.setStatusCode(HttpStatus.OK);
-		if(returnType.getParameterType().isAssignableFrom(void.class)) {
-            Result result = new Result();
-    		result.setData(body);
-    		result.setStatus(ApiStatus.SUCCESS);
-    		return result;
-        }
-		if (body instanceof ApiError) {
-			return body;
-		}
-
-		if (body instanceof String) {
-			return body;
-		}
 		if (body instanceof RuntimeException) {
 			RuntimeException re = (RuntimeException) body;
 			ApiError apiError = new ApiError(ApiStatus.FAILED);
@@ -60,7 +47,18 @@ public class ResponseEntityHandler implements ResponseBodyAdvice<Object> {
 			apiError.setTimestamp(LocalDateTime.now());
 			return apiError;
 		}
-
+		if (body instanceof ApiError) {
+			return body;
+		}
+		if (body instanceof String) {
+			return body;
+		}
+		if(returnType.getParameterType().isAssignableFrom(void.class)) {
+            Result result = new Result();
+    		result.setData(body);
+    		result.setStatus(ApiStatus.SUCCESS);
+    		return result;
+        }
 		Result result = new Result();
 		result.setData(body);
 		result.setStatus(ApiStatus.SUCCESS);
