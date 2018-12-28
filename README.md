@@ -16,3 +16,7 @@ Project template for spring REST API
 * Custom Date Validator for REST API Request Parameter
 * Properties Config
   Postman Inport URL - https://www.getpostman.com/collections/2f22d4bd2b4594b0f8a6
+  
+* Angular Project 
+  - Link : https://github.com/javamutu/mutu-angular-primeng
+  - Client Application for this REST API.
