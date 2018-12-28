@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.oauth2;
+package com.mutu.spring.rest.zconfig.oath2;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.aop.exception;
+package com.mutu.spring.rest.zconfig.dto;
 
 import java.time.LocalDateTime;
 

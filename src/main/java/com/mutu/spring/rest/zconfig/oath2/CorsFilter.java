@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.oauth2;
+package com.mutu.spring.rest.zconfig.oath2;
 import java.io.IOException;
 
 import javax.servlet.FilterChain;

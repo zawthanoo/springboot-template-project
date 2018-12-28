@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.oauth2;
+package com.mutu.spring.rest.zconfig.oath2;
 
 import javax.annotation.Resource;
 
@@ -12,7 +12,6 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  * @author Zaw Than Oo
@@ -27,6 +26,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Resource(name = "UserService")
 	private UserDetailsService userDetailsService;
+	
+	@Autowired
+	public CustomPasswordEncoder passwordEncoder;
+
 
 	@Override
 	@Bean
@@ -36,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-		auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+		auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
 	}
 
 	@Override
@@ -45,10 +48,5 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         .anonymous().disable()
         .authorizeRequests()
         .antMatchers("/api/**").permitAll();		
-	}
-
-	@Bean
-	public BCryptPasswordEncoder encoder() {
-		return new BCryptPasswordEncoder();
 	}
 }

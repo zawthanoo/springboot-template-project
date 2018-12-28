@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.aop;
+package com.mutu.spring.rest.zconfig.aop;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

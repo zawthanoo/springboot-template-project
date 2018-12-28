@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mutu.spring.rest.common.Utils;
 import com.mutu.spring.rest.custommapper.EmployeeCustomMapper;
 import com.mutu.spring.rest.dto.CreateEmployeeDtoReq;
 import com.mutu.spring.rest.dto.EmployeeDto;
@@ -40,7 +41,7 @@ public class EmployeeDao {
 	public void create(CreateEmployeeDtoReq dtoReq) {
 		Employee employee = new Employee();
 		employee.setName(dtoReq.getFullName());
-		employee.setDob(dtoReq.getDob());
+		employee.setDob(Utils.getDate(dtoReq.getDob()));
 		employee.setEmail(dtoReq.getEmail());
 		employee.setMobile(dtoReq.getPhone());
 		employee.setGender(dtoReq.getGender().toString());

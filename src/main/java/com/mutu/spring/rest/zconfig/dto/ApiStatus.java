@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.aop.dto;
+package com.mutu.spring.rest.zconfig.dto;
 
 /**
  * @author Zaw Than Oo

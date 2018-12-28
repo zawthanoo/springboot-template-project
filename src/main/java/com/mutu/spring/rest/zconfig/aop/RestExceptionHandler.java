@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.aop;
+package com.mutu.spring.rest.zconfig.aop;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,12 +15,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
-import com.mutu.spring.rest.aop.dto.ApiStatus;
-import com.mutu.spring.rest.aop.dto.InvalidField;
-import com.mutu.spring.rest.aop.exception.ApiError;
-import com.mutu.spring.rest.aop.exception.BusinessLogicException;
-import com.mutu.spring.rest.aop.exception.DAOException;
-import com.mutu.spring.rest.aop.exception.MessageCode;
+import com.mutu.spring.rest.zconfig.MessageCode;
+import com.mutu.spring.rest.zconfig.dto.ApiError;
+import com.mutu.spring.rest.zconfig.dto.ApiStatus;
+import com.mutu.spring.rest.zconfig.dto.InvalidField;
+import com.mutu.spring.rest.zconfig.exception.BusinessLogicException;
+import com.mutu.spring.rest.zconfig.exception.DAOException;
 
 /**
  * @author Zaw Than Oo
@@ -64,14 +64,14 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 	protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
 			HttpHeaders headers, HttpStatus status, WebRequest request) {
 		List<InvalidField> invalidFieldList = new ArrayList<InvalidField>();
-		for(FieldError error : ex.getBindingResult().getFieldErrors()) {
+		for (FieldError error : ex.getBindingResult().getFieldErrors()) {
 			invalidFieldList.add(new InvalidField(error.getField(), error.getCode(), error.getDefaultMessage()));
 		}
 		ApiError apiError = new ApiError(ApiStatus.FAILED);
 		apiError.setMessage("Request parameter is invalid.");
 		apiError.setMessageCode(MessageCode.INVALID_REQUEST_PARAMETER);
 		apiError.setPayLoad(invalidFieldList);
-		return (ResponseEntity)buildResponseEntity(apiError);
+		return (ResponseEntity) buildResponseEntity(apiError);
 	}
 
 	private ResponseEntity<ApiError> buildResponseEntity(ApiError apiError) {

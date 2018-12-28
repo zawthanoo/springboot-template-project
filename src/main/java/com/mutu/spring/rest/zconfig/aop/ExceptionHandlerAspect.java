@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.aop;
+package com.mutu.spring.rest.zconfig.aop;
 
 import java.sql.SQLException;
 
@@ -9,8 +9,8 @@ import org.aspectj.lang.annotation.AfterThrowing;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.stereotype.Component;
 
-import com.mutu.spring.rest.aop.exception.DAOException;
-import com.mutu.spring.rest.aop.exception.MessageCode;
+import com.mutu.spring.rest.zconfig.MessageCode;
+import com.mutu.spring.rest.zconfig.exception.DAOException;
 
 /**
  * @author Zaw Than Oo

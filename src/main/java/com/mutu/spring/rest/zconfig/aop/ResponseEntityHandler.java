@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.aop;
+package com.mutu.spring.rest.zconfig.aop;
 
 import java.time.LocalDateTime;
 
@@ -11,10 +11,10 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
-import com.mutu.spring.rest.aop.dto.ApiStatus;
-import com.mutu.spring.rest.aop.dto.Result;
-import com.mutu.spring.rest.aop.exception.ApiError;
-import com.mutu.spring.rest.aop.exception.MessageCode;
+import com.mutu.spring.rest.zconfig.MessageCode;
+import com.mutu.spring.rest.zconfig.dto.ApiError;
+import com.mutu.spring.rest.zconfig.dto.ApiStatus;
+import com.mutu.spring.rest.zconfig.dto.Result;
 
 /**
  * @author Zaw Than Oo
@@ -53,12 +53,12 @@ public class ResponseEntityHandler implements ResponseBodyAdvice<Object> {
 		if (body instanceof String) {
 			return body;
 		}
-		if(returnType.getParameterType().isAssignableFrom(void.class)) {
-            Result result = new Result();
-    		result.setData(body);
-    		result.setStatus(ApiStatus.SUCCESS);
-    		return result;
-        }
+		if (returnType.getParameterType().isAssignableFrom(void.class)) {
+			Result result = new Result();
+			result.setData(body);
+			result.setStatus(ApiStatus.SUCCESS);
+			return result;
+		}
 		Result result = new Result();
 		result.setData(body);
 		result.setStatus(ApiStatus.SUCCESS);

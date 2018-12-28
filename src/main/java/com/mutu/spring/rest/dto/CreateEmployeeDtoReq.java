@@ -1,14 +1,10 @@
 package com.mutu.spring.rest.dto;
 
-import java.util.Date;
-
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
 
-import org.springframework.format.annotation.DateTimeFormat;
-
+import com.mutu.spring.rest.zconfig.validator.DateFormatConstraint;
 import com.sun.istack.NotNull;
 
 import lombok.AllArgsConstructor;
@@ -33,7 +29,6 @@ public class CreateEmployeeDtoReq {
 	@NotNull
 	private Gender gender;
 	@NotNull
-	@Past
-	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date dob;
+	@DateFormatConstraint
+	private String dob;
 }

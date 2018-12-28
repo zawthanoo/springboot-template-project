@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.aop;
+package com.mutu.spring.rest.zconfig.aop;
 
 import org.aspectj.lang.annotation.Pointcut;
 

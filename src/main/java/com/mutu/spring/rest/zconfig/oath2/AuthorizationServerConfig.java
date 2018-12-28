@@ -1,21 +1,19 @@
-package com.mutu.spring.rest.oauth2;
+package com.mutu.spring.rest.zconfig.oath2;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.oauth2.common.exceptions.OAuth2Exception;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.error.WebResponseExceptionTranslator;
 import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
+import com.mutu.spring.rest.zconfig.AppConfig;
 
 /**
  * @author Zaw Than Oo
@@ -32,9 +30,6 @@ import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 @EnableAuthorizationServer
 public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
-	static final String CLIEN_ID = "zto-api-client";
-//	static final String CLIENT_SECRET = "zto-api-client";
-	static final String CLIENT_SECRET = "$2a$04$HvD/aIuuta3B5DjXXzL08OSIcYEoFsAYK9Ys4fKpMNHTODZm.mzsq";
 	static final String GRANT_TYPE_PASSWORD = "password";
 	static final String AUTHORIZATION_CODE = "authorization_code";
 	static final String REFRESH_TOKEN = "refresh_token";
@@ -48,12 +43,13 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	static final int FREFRESH_TOKEN_VALIDITY_SECONDS = 2 * 60 * 60;
 
 	@Autowired
+	private AppConfig appConfig;
+	
+	@Autowired
 	private AuthenticationManager authenticationManager;
-
-	@Bean
-	public BCryptPasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	
+	@Autowired
+	public CustomPasswordEncoder passwordEncoder;
 
 	@Bean
 	public JwtAccessTokenConverter accessTokenConverter() {
@@ -69,13 +65,12 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 
 	@Override
 	public void configure(AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
-		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()");
+		oauthServer.tokenKeyAccess("permitAll()").checkTokenAccess("isAuthenticated()").passwordEncoder(passwordEncoder);
 	}
 
 	@Override
 	public void configure(ClientDetailsServiceConfigurer configurer) throws Exception {
-
-		configurer.inMemory().withClient(CLIEN_ID).secret("{bcrypt}" + CLIENT_SECRET)
+		configurer.inMemory().withClient(appConfig.getClientId()).secret(appConfig.getClientIdPassword())
 				.authorizedGrantTypes(GRANT_TYPE_PASSWORD, AUTHORIZATION_CODE, REFRESH_TOKEN, IMPLICIT)
 				.scopes(SCOPE_READ, SCOPE_WRITE, SCOPE_TRUST).accessTokenValiditySeconds(ACCESS_TOKEN_VALIDITY_SECONDS)
 				.refreshTokenValiditySeconds(FREFRESH_TOKEN_VALIDITY_SECONDS);
@@ -85,13 +80,5 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager)
 				.accessTokenConverter(accessTokenConverter());
-		endpoints.exceptionTranslator(new WebResponseExceptionTranslator<OAuth2Exception>() {
-			
-			@Override
-			public ResponseEntity<OAuth2Exception> translate(Exception e) throws Exception {
-				e.printStackTrace();
-				return null;
-			}
-		});
 	}
 }

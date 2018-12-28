@@ -1,4 +1,4 @@
-package com.mutu.spring.rest.oauth2;
+package com.mutu.spring.rest.zconfig.oath2;
 
 import java.util.List;
 
@@ -9,9 +9,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.mutu.spring.rest.dto.LoginUser;
+import com.mutu.spring.rest.dto.UserDto;
 import com.mutu.spring.rest.zgen.entity.User;
-import com.mutu.spring.rest.zgen.entity.UserExample;
-import com.mutu.spring.rest.zgen.mapper.UserMapper;
 
 /**
  * @author Zaw Than Oo
@@ -23,9 +22,9 @@ public class UserServiceImpl implements UserDetailsService {
 
 	@Autowired
 	private UserDao userDao;
-
+	
 	@Autowired
-	private UserMapper userMapper;
+	public CustomPasswordEncoder passwordEncoder;
 
 	public UserDetails loadUserByUsername(String userId) throws UsernameNotFoundException {
 		LoginUser user = userDao.findByUsername(userId);
@@ -36,7 +35,14 @@ public class UserServiceImpl implements UserDetailsService {
 	}
 
 	public List<User> findAll() {
-		UserExample example = new UserExample();
-		return userMapper.selectByExample(example);
+		return userDao.findAll();
+	}
+	
+	public void create(UserDto userDto) {
+		String encodedPassword = passwordEncoder.encode(userDto.getPassword());
+		User user = new User();
+		user.setUsername(userDto.getUsername());
+		user.setPassword(encodedPassword);
+		userDao.insert(user);
 	}
 }

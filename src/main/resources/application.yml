@@ -6,7 +6,7 @@ spring:
     username: root
     password: root
   jackson:
-    date-format: yyyy-MM-dd 
+    date-format: yyyy-MM-dd
 server:
   servlet:
     contextPath: /api    
